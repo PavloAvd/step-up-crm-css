@@ -1,0 +1,63 @@
+.navbar{
+    background: none;
+    display: grid;
+    justify-content: space-between;
+    
+    
+    .logo{
+        // display: block;
+        max-width: 150px;
+        padding-left: 20px;
+        padding-top: 20px;
+        // -webkit-filter: drop-shadow( 0px 15px 10px rgb(0, 0, 0));
+        filter: drop-shadow(0px 20px 10px #000);
+    }
+
+    .navLinks{
+        display: flex;
+        background: none;
+        border: none;
+        overflow: auto;    
+        white-space: nowrap;
+        z-index: 1;
+        margin-right: 0;
+        
+        &::-webkit-scrollbar{
+            display: none;
+        }
+    }
+    .studentlinks{
+        margin: 0;
+        padding: 0;
+
+    }
+    
+    .linksInside{
+        border: 0;
+        padding-left: 20px;
+        padding-bottom: 20px;
+    }
+
+    .profileLinks{
+        padding: 0;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        right: 20px;
+
+    }
+}
+
+
+
+// @media(width <= 600px) {
+//     .navLinks{
+//         overflow-x: auto;
+
+//     }
+//     .profileLinks{
+//         position: absolute;
+//         right: 0;
+//         flex-direction: column;
+//     }
+// }

@@ -1,0 +1,45 @@
+body {
+    // display: block;
+    // position: relative;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;  
+    // background: linear-gradient(to bottom, #38385a, #575671, #777588, #9896a0, #b9b9b9);    
+    
+    // position: fixed;
+} 
+.bg{
+    
+    background: radial-gradient(ellipse at center, #cecdcd 0%, #292928 100%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    min-width: 100vw;
+    min-height: 100vh;
+    position: fixed;
+    z-index: -100;
+    background-size: cover;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+.test {
+    margin: 50px;
+}
+
+
