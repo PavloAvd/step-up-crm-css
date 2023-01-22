@@ -2,11 +2,11 @@
   <div class="navbar">
 
     <div class=" " >
-      <img class="logo" src="../assets/logo.png" >
+      <img class="logo" src="../assets/logo.png" @click="router.push('/')">
     </div>
 
     <div class="navLinks" >
-      <div  class="linksInside">
+      <div  class="guestLinks">
         <app-button  title="Головна" @click="router.push('/')"></app-button>
         <app-button  title="Галерея" @click="router.push('/gallery')"></app-button>
         <app-button  title="Мерч" @click="router.push('/shop')"></app-button>

@@ -1,15 +1,15 @@
 <template>
-  <div class=" ">
+  <div class="containerAuth">
     <div class="">
-      <img src="logo.png" class="">
+      <img src="../assets/logo.png" class="logo">
     </div>
 
-    <form @submit.prevent="onSubmit" class="">
+    <form @submit.prevent="onSubmit" class="authForm">
       <h1 class="">Авторизація</h1>
-      <div class="">
+      <div class="authFormInput">
         <label for="email" class="">Введіть email</label>
         <input
-            class=""
+            class="input"
            :class="['rounded-[10px] p-2 h-10', {'border-2 border-red-500' : eError}]"
             type="email" id="email"
             v-model="email"
@@ -17,10 +17,10 @@
         >
         <small v-if="eError" class="">{{eError}}</small>
       </div>
-      <div class="">
+      <div class="authFormInput">
         <label for="password" class="">Введіть пароль</label>
         <input
-            class=""
+            class="input"
             :class="['rounded-[10px] h-10 p-2 ', {'border-2 border-red-500' : pError}]"
             type="password"
             id="password"

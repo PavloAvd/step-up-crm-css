@@ -1,7 +1,7 @@
 <template>
   <div class="bg"></div>
   <div class="">
-    <component :is=" layout + '-layout' " v-if="layout"  class=""/>
+    <component :is=" layout + '-layout' " v-if="layout"  />
   </div>
   
 </template>

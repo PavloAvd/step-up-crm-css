@@ -7,7 +7,7 @@
         <the-sidebar />
       </div>
       <div>
-        <router-view />
+        <router-view  class="contentArea"/>
       </div>
 
     </div>

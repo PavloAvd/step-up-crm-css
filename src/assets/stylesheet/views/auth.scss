@@ -1,0 +1,21 @@
+.containerAuth{
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+}
+
+.authForm{
+    display: grid;
+    gap: 20px;
+    margin-top: 20px;
+    justify-items: normal;
+}
+
+.authFormInput{
+    display: grid;
+    gap: 15px;
+}
+.input{
+    border-radius: 10px;
+    height: 30px;
+}

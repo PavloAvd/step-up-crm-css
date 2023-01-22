@@ -1,18 +1,42 @@
 <template>
-  <div >
-    <h1 class="">Головна сторінка </h1>
-    <h2 class="">Новини та фото з івентів чи тренувань </h2>
-
-     <!-- <carousel class=""/> -->
+  <div class="homeContainer">
+    <div class="pagePart" >
+      <h1>Вітаємо на освітньому танцювальному порталі колективу Step Up</h1>
+    </div>
+    <div class="imgHomeList" >
+      <img src="../assets/testjpg.jpg" alt="" class="imgHome">
+      <img src="../assets/testjpg.jpg" alt="" class="imgHome">
+      <img src="../assets/testjpg.jpg" alt="" class="imgHome">
+      
+      <h2>тут буде фото з тренувань</h2>
+    </div>
+    <div class="pagePart" >
+      <div v-for="urls in store.getters['gallery/getHomePageVideo'] " >
+        <video :src="urls"></video>
+     </div>
+    </div>
+    <div class="pagePart" >
+      <h2>тут будуть останні відгуки від батьківта дітей</h2>
+    </div>
+    <div class="pagePart feedback" >
+      <label for="feedback">Написати Ваші враження або побажання можна тут</label>
+      <Input type="text" id="feedback"/>
+      <AppButton title="Відправити"></AppButton>
+    </div>
+     <carousel class=""/>
   </div>
 </template>
 
-<script>
+<script setup>
+import AppButton from '@/components/ui/button/AppButton.vue';
 import Carousel from '@/components/Carousel'
-export default {
-  name: "Home",
-  components: {Carousel}
-}
+import { useStore } from 'vuex';
+import { onMounted } from 'vue';
+
+const store = useStore()
+onMounted( async () => {
+    await store.dispatch('loadHomePageVideo')
+})
 </script>
 
 <style scoped>
