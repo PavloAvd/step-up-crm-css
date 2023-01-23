@@ -3,16 +3,18 @@
     <div class="pagePart" >
       <h1>Вітаємо на освітньому танцювальному порталі колективу Step Up</h1>
     </div>
-    <div class="imgHomeList" >
-      <img src="../assets/testjpg.jpg" alt="" class="imgHome">
-      <img src="../assets/testjpg.jpg" alt="" class="imgHome">
-      <img src="../assets/testjpg.jpg" alt="" class="imgHome">
-      
-      <h2>тут буде фото з тренувань</h2>
+    <div>
+      <h2>Фото з тренувань</h2>
+      <div class="imgHomeList" >
+        <img src="../assets/testjpg.jpg" alt="" class="imgHome">
+        <img src="../assets/testjpg.jpg" alt="" class="imgHome">
+        <img src="../assets/testjpg.jpg" alt="" class="imgHome">
+      </div>
     </div>
+
     <div class="pagePart" >
-      <div v-for="urls in store.getters['gallery/getHomePageVideo'] " >
-        <video :src="urls"></video>
+      <div v-for="urls in store.getters['gallery/getHomePageVideo'] "  class="homePageVideoList">
+        <video :src="urls" class="homePageVideo" controls></video>
      </div>
     </div>
     <div class="pagePart" >
@@ -23,7 +25,7 @@
       <Input type="text" id="feedback"/>
       <AppButton title="Відправити"></AppButton>
     </div>
-     <carousel class=""/>
+<!--    <carousel class=""/>-->
   </div>
 </template>
 
@@ -35,8 +37,11 @@ import { onMounted } from 'vue';
 
 const store = useStore()
 onMounted( async () => {
-    await store.dispatch('loadHomePageVideo')
+    await store.dispatch('gallery/loadHomePageVideo')
 })
+// onMounted( async () => {
+//   await store.dispatch('gallery/loadCarousel')
+// })
 </script>
 
 <style scoped>

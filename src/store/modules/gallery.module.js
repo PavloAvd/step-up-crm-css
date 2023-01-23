@@ -33,27 +33,28 @@ export default {
           let imgRef = ref(storage, `${item.fullPath}`)
           return await getDownloadURL(imgRef)
         }))
-        
+
         Promise.all(imgUrls)
         .then(res => {
           commit('setCarouselImages', res)
         })
-      }
-    },
-    async loadHomePageVideo(commit){
-      const videosRef = await listAll(trainingVideosRef)
-      const videos = Object.values(videosRef.items)
-      
-      let videosUrl =videos.map((async item => {
-        let vidRef = ref(storage, `${item.fullPath}`)
-        return await getDownloadURL(vidRef)
-      }))
+      },
+        async loadHomePageVideo({commit}) {
+            const videosRef = await listAll(trainingVideosRef)
+            const videos = Object.values(videosRef.items)
 
-      Promise.all(videosUrl)
-      .then(res => {
-        commit('setHomePageVideos', res)
-      })
-    },
+            let videosUrl =videos.map((async item => {
+                let vidRef = ref(storage, `${item.fullPath}`)
+                return await getDownloadURL(vidRef)
+            }))
+
+            Promise.all(videosUrl)
+                .then(res => {
+                    commit('setHomePageVideos', res)
+                })
+        }
+      },
+
     getters: {
         load(state) {
             return state.carouselImages
