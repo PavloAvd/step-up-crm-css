@@ -2,9 +2,8 @@
     background: none;
     display: grid;
     justify-content: space-between;
-
-
-
+    // position: sticky;
+    // top: -1px;
 
     .navLinks{
         display: flex;
@@ -40,10 +39,9 @@
     }
 }
 
+// --------Desktop Screen--------
 
-// desktop screen
-
-@media (width >= 850px) {
+@media (min-width: 850px) {
     .navbar{
         display: flex;
         align-items: center;
@@ -57,13 +55,11 @@
     }
 
     // .navLinks{
-
     // }
-
-
 }
 
-@media (max-width 850px){
+// --------Mobile Screen--------
+@media (max-width: 850px){
     .profileLinks{
         position: absolute;
         right: 20px;
