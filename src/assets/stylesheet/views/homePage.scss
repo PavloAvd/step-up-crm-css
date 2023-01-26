@@ -1,37 +1,48 @@
 .homeContainer{
     display: grid;
     gap: 1rem;
+    justify-content: center;
+    h2{
+        text-align: center;
+    }
+    .header{
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        text-align: center;
+        border:  solid rgb(62, 59, 59) 5px;
+        border-radius: 10px;
+        margin: 10px
 
+    }
+        
 };
+.sliderListMobile{
+    display: flex;
+    gap: 10px;
+    overflow: auto;
+    white-space: nowrap;
+}
 .pagePart{
     display: flex;
     color: white;
     //border: solid black 2px;
     margin: 0px 10px 0px 10px;
 };
+
 .feedback{
     display: grid;
+    label{
+        text-align: center
+    }
 };
-.imgHomeList{
-    display: flex;
-    gap: 10px;
-    overflow: auto;
-    white-space: nowrap;
 
-};
 .imgHome{
     width: 80%;
     max-width: 400px;
     border-radius: 10px;
     box-shadow: 0px 10px 20px 10px black;
-    margin: 40px 30px 40px  ;
-};
-
-.homePageVideoList {
-    display: flex;
-    gap: 10px;
-    overflow: auto;
-    white-space: nowrap;
+    margin: 40px 30px 40px;
 };
 
 .homePageVideo{
@@ -41,4 +52,7 @@
     box-shadow: 0px 10px 20px 10px black;
     margin: 40px 30px 40px  ;
 }
+
+
+
 

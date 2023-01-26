@@ -2,7 +2,7 @@
  <div class="car-container">
    <div class="carousel">
       <div v-for="urls in store.getters['gallery/load'] " class="car-image" >
-        <img :src="urls "  alt="logo.png">
+        <img :src="urls"  alt="logo.png">
       </div>
     </div>
   </div>

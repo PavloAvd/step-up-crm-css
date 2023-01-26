@@ -1,28 +1,41 @@
 <template>
   <div class="homeContainer">
-    <div class="pagePart" >
-      <h1>Вітаємо на освітньому танцювальному порталі колективу Step Up</h1>
+    <div class="header">
+      <h2>Вітаємо на освітньому танцювальному порталі колективу</h2>
+      <h1>STEP UP SHTURM</h1>  
     </div>
     <div>
       <h2>Фото з тренувань</h2>
-      <div class="imgHomeList" >
-        <img src="../assets/testjpg.jpg" alt="" class="imgHome">
-        <img src="../assets/testjpg.jpg" alt="" class="imgHome">
-        <img src="../assets/testjpg.jpg" alt="" class="imgHome">
+      <div class="sliderListMobile" >
+        <div v-for="(img) in homePagePhotos" :key="idx">
+          <img :src="img" alt="">
+        </div>
       </div>
     </div>
 
-    <div class="pagePart" >
-      <div v-for="urls in store.getters['gallery/getHomePageVideo'] "  class="homePageVideoList">
-        <video :src="urls" class="homePageVideo" controls></video>
+    <div class="pagePart">
+      <!-- <div v-for="urls in store.getters['gallery/getHomePageVideo'] "  class="homePageVideoList">
+        <video :src="urls" class="homePageVideo" controls ></video>
+     </div> -->
+     <div class="sliderListMobile">
+      <video src="../assets/testVideo.mp4" controls class="homePageVideo"></video>
+      <video src="../assets/testVideo.mp4" controls class="homePageVideo"></video>
+      <video src="../assets/testVideo.mp4" controls class="homePageVideo"></video>
      </div>
     </div>
-    <div class="pagePart" >
-      <h2>тут будуть останні відгуки від батьківта дітей</h2>
+    <div class="sliderListMobile" >
+      <div  v-for="item, idx in feedbacks" :key="idx">
+        <div class="card">
+          <span>{{ item.name }}</span>
+          <span>{{ item.coment }}</span>
+        </div>
+      </div>
     </div>
-    <div class="pagePart feedback" >
-      <label for="feedback">Написати Ваші враження або побажання можна тут</label>
-      <Input type="text" id="feedback"/>
+
+      
+    <div class="pagePart feedback">
+      <label for="feedback">Залишити відгук</label>
+      <Input type="text" id="feedback" class="input"/>
       <AppButton title="Відправити"></AppButton>
     </div>
 <!--    <carousel class=""/>-->
@@ -33,12 +46,25 @@
 import AppButton from '@/components/ui/button/AppButton.vue';
 import Carousel from '@/components/Carousel'
 import { useStore } from 'vuex';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 
-const store = useStore()
-onMounted( async () => {
-    await store.dispatch('gallery/loadHomePageVideo')
-})
+const feedbacks = [
+  { name: 'Павло: ', coment : 'Найкраща хореографія тільки тут' },
+  { name: 'Павло: ', coment : 'Найкраща хореографія тільки тут' },
+  { name: 'Павло: ', coment : 'Найкраща хореографія тільки тут' },
+]  
+
+const homePagePhotos = ref([
+  '../assets/testjpg.jpg',
+  '../assets/testjpg.jpg',
+  '../assets/testjpg.jpg'
+])
+
+
+// const store = useStore()
+// onMounted( async () => {
+//     await store.dispatch('gallery/loadHomePageVideo')
+// })
 // onMounted( async () => {
 //   await store.dispatch('gallery/loadCarousel')
 // })
