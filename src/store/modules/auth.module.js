@@ -8,12 +8,13 @@ import {
     getFirestore,
     collection,
     addDoc,
+    setDoc,
     getDoc,
     getDocs,
     doc
 } from "firebase/firestore";
 import { fbApp } from "/firebase-config";
-import {error} from "@/utils/error";
+import { error } from "@/utils/error";
 
 const db =getFirestore(fbApp)
 const auth = getAuth(fbApp)
@@ -38,12 +39,9 @@ export default {
     actions: {
         async login({ dispatch, commit }, {email, password}) {
            try {
-              let adminMail = []
-              const queryAdmins = await getDocs(collection(db, "isAdmin"))
-              queryAdmins.forEach((doc) => {
-                  adminMail = doc.data()
-              })
-              if ( Object.values(adminMail).includes(email) ) {
+              const roleCheckRef = doc(db, 'checks', 'isAdmin')
+              const queryAdmins =  (await (getDoc(roleCheckRef))).data()                
+              if ( Object.values(queryAdmins).includes(email) ) {
                    await signInWithEmailAndPassword (auth, email, password)
                    console.log('auth as admin', auth.currentUser.email)
                    commit('setRole', 'admin')
@@ -66,7 +64,7 @@ export default {
         async signUp({ commit, dispatch }, {email, password, fullName, bDate, phone, zone, dCode}) {
             try {
                 await createUserWithEmailAndPassword (auth, email, password)
-                await addDoc(collection(db, 'users' ), {
+                await setDoc(doc(db, 'users', email ), {
                     email : email,
                     fullName : fullName,
                     birthday : bDate,

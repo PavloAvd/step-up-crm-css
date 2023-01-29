@@ -1,8 +1,19 @@
-import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage"
+import { getStorage, ref, listAll, getDownloadURL,  } from "firebase/storage"
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    setDoc,
+    getDoc,
+    getDocs,
+    doc
+} from "firebase/firestore";
+import { object } from "yup";
 import { fbApp } from "/firebase-config";
+import {map} from "core-js/internals/array-iteration";
 
 
-
+const db =getFirestore(fbApp)
 const storage = getStorage(fbApp)
 const storageRef = ref(storage)
 const carouselRef = ref(storage, 'carouselPhotos')
@@ -13,15 +24,15 @@ export default {
     state: {
         carouselImages : [],
         homePageVideos : [],
-
+        homePagePhotos : ['../assets/testjpg.jpg']
     },
 
     mutations: {
         setCarouselImages(state, imgUrls){
             state.carouselImages = imgUrls
         },
-        setHomePageVideos(state, videosUrl){
-            state.homePageVideos = videosUrl
+        setHomePageVideos(state, videoUrls){
+            state.homePageVideos = videoUrls
         }
     },
     actions: {
@@ -39,28 +50,26 @@ export default {
           commit('setCarouselImages', res)
         })
       },
-        async loadHomePageVideo({commit}) {
-            const videosRef = await listAll(trainingVideosRef)
-            const videos = Object.values(videosRef.items)
 
-            let videosUrl =videos.map((async item => {
-                let vidRef = ref(storage, `${item.fullPath}`)
-                return await getDownloadURL(vidRef)
-            }))
+      async loadHomePageVideo({commit}) {
+        const homePageVideoRef = doc(db, 'linksList', 'homePageVideo')
+        const videoUrls = (await (getDoc(homePageVideoRef))).data()
 
-            Promise.all(videosUrl)
-                .then(res => {
-                    commit('setHomePageVideos', res)
-                })
-        }
+        console.log('video urls', Object.values(videoUrls))
+        commit('setHomePageVideos', videoUrls)
       },
 
+
+    },
     getters: {
         load(state) {
             return state.carouselImages
         },
         getHomePageVideo(state){
-          return state.homePageVideos
+            return state.homePageVideos
+        },
+        hpiLink(state){
+            return require(state.homePagePhotos)
         }
-    },
+    }
 }

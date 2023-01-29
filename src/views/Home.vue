@@ -2,41 +2,44 @@
   <div class="homeContainer">
     <div class="header">
       <h2>Вітаємо на освітньому танцювальному порталі колективу</h2>
-      <h1>STEP UP SHTURM</h1>  
+      <h1>STEP UP SHTURM</h1>
     </div>
     <div>
       <h2>Фото з тренувань</h2>
       <div class="sliderListMobile" >
-        <div v-for="(img) in homePagePhotos" :key="idx">
-          <img :src="img" alt="">
+        <div v-for="item in homePagePhotos">
+          <img :src="require(`@/assets/${item}`)" class="imgHome" alt="">
         </div>
       </div>
     </div>
 
     <div class="pagePart">
-      <!-- <div v-for="urls in store.getters['gallery/getHomePageVideo'] "  class="homePageVideoList">
-        <video :src="urls" class="homePageVideo" controls ></video>
-     </div> -->
-     <div class="sliderListMobile">
-      <video src="../assets/testVideo.mp4" controls class="homePageVideo"></video>
-      <video src="../assets/testVideo.mp4" controls class="homePageVideo"></video>
-      <video src="../assets/testVideo.mp4" controls class="homePageVideo"></video>
-     </div>
+      <div class="sliderListMobile">
+        <div v-for="item in store.getters['gallery/getHomePageVideo']"  >
+          <iframe
+              class="homePageVideo"
+            :src="item"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
     </div>
     <div class="sliderListMobile" >
-      <div  v-for="item, idx in feedbacks" :key="idx">
+      <div  v-for="(item, idx) in feedbacks" :key="idx">
         <div class="card">
           <span>{{ item.name }}</span>
-          <span>{{ item.coment }}</span>
+          <span>{{ item.comment }}</span>
         </div>
       </div>
     </div>
 
-      
     <div class="pagePart feedback">
       <label for="feedback">Залишити відгук</label>
-      <Input type="text" id="feedback" class="input"/>
-      <AppButton title="Відправити"></AppButton>
+      <input type="text" id="feedback" class="input"/>
+      <AppButton title="Відправити" @click="store.dispatch('gallery/loadHomePageVideo')"></AppButton>
     </div>
 <!--    <carousel class=""/>-->
   </div>
@@ -46,25 +49,35 @@
 import AppButton from '@/components/ui/button/AppButton.vue';
 import Carousel from '@/components/Carousel'
 import { useStore } from 'vuex';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 
 const feedbacks = [
-  { name: 'Павло: ', coment : 'Найкраща хореографія тільки тут' },
-  { name: 'Павло: ', coment : 'Найкраща хореографія тільки тут' },
-  { name: 'Павло: ', coment : 'Найкраща хореографія тільки тут' },
-]  
+  { name: 'Павло: ', comment : 'Найкраща хореографія тільки тут' },
+  { name: 'Павло: ', comment : 'Найкраща хореографія тільки тут' },
+  { name: 'Павло: ', comment : 'Найкраща хореографія тільки тут' },
+]
 
-const homePagePhotos = ref([
-  '../assets/testjpg.jpg',
-  '../assets/testjpg.jpg',
-  '../assets/testjpg.jpg'
-])
+const homePagePhotos = [
+  'testjpg.jpg',
+  'testjpg.jpg',
+  'testjpg.jpg'
+]
 
+const homePageVideos = [
+  'https://www.youtube.com/embed/fzEeuxOZl_k',
+]
 
-// const store = useStore()
-// onMounted( async () => {
-//     await store.dispatch('gallery/loadHomePageVideo')
+let imgLink = computed(img => {
+  return require('@/assets/' + img)
+})
+
+const store = useStore()
+// let imgLink = computed( ()=> {
+//   return store.getters["gallery/hpiLink"]
 // })
+onMounted( async () => {
+    await store.dispatch('gallery/loadHomePageVideo')
+})
 // onMounted( async () => {
 //   await store.dispatch('gallery/loadCarousel')
 // })

@@ -3,13 +3,9 @@
       <div>
         <the-navbar class="" />
       </div>
-      <div class="">
-        <the-sidebar />
-      </div>
       <div>
         <router-view  class="contentArea"/>
       </div>
-
     </div>
 
 </template>
