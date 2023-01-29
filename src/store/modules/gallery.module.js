@@ -10,32 +10,32 @@ import {
 } from "firebase/firestore";
 import { object } from "yup";
 import { fbApp } from "/firebase-config";
-import {map} from "core-js/internals/array-iteration";
 
 
-const db =getFirestore(fbApp)
+
+const db = getFirestore(fbApp)
 const storage = getStorage(fbApp)
 const storageRef = ref(storage)
 const carouselRef = ref(storage, 'carouselPhotos')
 const trainingVideosRef = ref(storage,'classVideo')
 
 export default {
-    namespaced: true,
-    state: {
+  namespaced: true,
+  state: {
         carouselImages : [],
         homePageVideos : [],
         homePagePhotos : ['../assets/testjpg.jpg']
-    },
+  },
 
-    mutations: {
+  mutations: {
         setCarouselImages(state, imgUrls){
             state.carouselImages = imgUrls
         },
         setHomePageVideos(state, videoUrls){
             state.homePageVideos = videoUrls
         }
-    },
-    actions: {
+  },
+  actions: {
       async loadCarousel({commit}) {
         const imagesRef = await listAll(carouselRef)
         const images = Object.values(imagesRef.items)
@@ -54,22 +54,15 @@ export default {
       async loadHomePageVideo({commit}) {
         const homePageVideoRef = doc(db, 'linksList', 'homePageVideo')
         const videoUrls = (await (getDoc(homePageVideoRef))).data()
-
-        console.log('video urls', Object.values(videoUrls))
         commit('setHomePageVideos', videoUrls)
       },
-
-
-    },
-    getters: {
-        load(state) {
-            return state.carouselImages
+  },
+  getters: {
+      load(state) {
+          return state.carouselImages
+      },
+      getHomePageVideo(state){
+          return state.homePageVideos
         },
-        getHomePageVideo(state){
-            return state.homePageVideos
-        },
-        hpiLink(state){
-            return require(state.homePagePhotos)
-        }
-    }
+  }
 }

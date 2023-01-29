@@ -2,7 +2,8 @@ import {
     onAuthStateChanged,
     getAuth,
     signInWithEmailAndPassword,
-    createUserWithEmailAndPassword
+    createUserWithEmailAndPassword,
+    signOut
 } from 'firebase/auth'
 import {
     getFirestore,
@@ -22,11 +23,16 @@ const ROLE = 'role'
 
 export default {
     state: {
-        role: localStorage.getItem(ROLE)
+        role: localStorage.getItem(ROLE),
+        userId: '',
+        userInfo: {}
     },
     getters: {
         role(state) {
             return state.role
+        },
+        name(state) {
+            return state.userInfo.fullName
         }
     },
     mutations: {
@@ -34,27 +40,37 @@ export default {
             state.role = role
             localStorage.setItem(ROLE, role)
             console.log(role)
+        },
+        setUser(state, user) {
+            state.userId = user.uid
+            localStorage.setItem('userId', user.uid) 
+        },
+        removeUser(state) {
+            state.role = ''
+            state.userId = ''
+            localStorage.clear()
+        },
+        setUserInfo(state, userInfo) {
+            state.userInfo = userInfo
         }
     },
     actions: {
         async login({ dispatch, commit }, {email, password}) {
-           try {
+            try {
               const roleCheckRef = doc(db, 'checks', 'isAdmin')
-              const queryAdmins =  (await (getDoc(roleCheckRef))).data()                
+              const queryAdmins = (await (getDoc(roleCheckRef))).data()                
               if ( Object.values(queryAdmins).includes(email) ) {
                    await signInWithEmailAndPassword (auth, email, password)
                    console.log('auth as admin', auth.currentUser.email)
                    commit('setRole', 'admin')
-                   commit('openStudentBar')
-
+                   dispatch('userState')
               } else {
                    await signInWithEmailAndPassword (auth, email, password)
                    console.log('auth as student', auth.currentUser.email)
                    commit('setRole', 'student')
-                   commit('openStudentBar')
-                  dispatch('userState')
+                   dispatch('userState')
               }
-           } catch (e) {
+            } catch (e) {
                dispatch('message/setMessage', {
                    value : error(e.code),
                    type : 'danger'
@@ -72,7 +88,9 @@ export default {
                     zone : zone,
                     dCode: dCode
                 })
+                
                 dispatch('userState')
+
                 // console.log('auth', email,fullName,bDate,phone,zone,dCode)
             } catch (e) {
                 console.log(e)
@@ -81,12 +99,28 @@ export default {
         async userState ({commit, dispatch}) {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                    console.log('user', user)
+                    commit('setUser', user)
+                    dispatch('userInfo', user.email)
+                    console.log('onmounted userstate', user.email)
+                    
+                } else {
+                    localStorage.clear()
                 }
             })
+        },
+        async userInfo ({commit, dispatch}, email){
+            const userInfoRef =  doc(db, 'users', `${email}`)
+            const userInfo = (await (getDoc(userInfoRef))).data()
+            commit('setUserInfo', userInfo)
+        },
+        async logOut ({commit, dispatch}) {
+           try{
+            await signOut(auth)
+            commit('removeUser')
+            console.log(user)
+           } catch (e) {
+                console.log(e)
+           }
         }
     }
-
-
-
 }

@@ -4,7 +4,7 @@
     <div class=" " >
       <img class="logo" src="../assets/logo.png" @click="router.push('/')">
     </div>
-
+    <span>Привіт {{ store.getters['name'] }}</span>
     <div class="navLinks" >
       <div  class="guestLinks">
         <app-button  title="Головна" @click="router.push('/')"></app-button>
@@ -12,7 +12,7 @@
         <app-button  title="Мерч" @click="router.push('/shop')"></app-button>
         <app-button  title="Контакти" @click="router.push('/contacts')"></app-button>
       </div>
-      <div class="studentLinks">
+      <div class="studentLinks" v-if="!!store.getters['role']">
         <app-button title="Музика" @click="router.push('/music')"></app-button>
         <app-button title="Бібліотека" @click="router.push('/theory')"></app-button>
         <app-button title="Журнал" @click="router.push('/journal')"></app-button>
@@ -23,7 +23,7 @@
     </div>
     <div class="profileLinks">
       <app-button title="Авторизація" @click="router.push('/auth')"></app-button>
-      <app-button title="Профіль" ></app-button>
+      <app-button title="Профіль" @click="store.dispatch('logOut')" ></app-button>
     </div>
 
 </div>

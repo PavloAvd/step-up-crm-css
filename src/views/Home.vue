@@ -1,8 +1,8 @@
 <template>
   <div class="homeContainer">
     <div class="header">
-      <h2>Вітаємо на освітньому танцювальному порталі колективу</h2>
-      <h1>STEP UP SHTURM</h1>
+      <h2 class="">Вітаємо на освітньому танцювальному порталі колективу</h2>
+      <h1 class="">STEP UP SHTURM</h1>
     </div>
     <div>
       <h2>Фото з тренувань</h2>
@@ -28,6 +28,9 @@
       </div>
     </div>
     <div class="sliderListMobile" >
+      <div class="card">
+        <span>{{ store.getters['feedbackList']  }}</span>
+      </div>
       <div  v-for="(item, idx) in feedbacks" :key="idx">
         <div class="card">
           <span>{{ item.name }}</span>
@@ -77,6 +80,7 @@ const store = useStore()
 // })
 onMounted( async () => {
     await store.dispatch('gallery/loadHomePageVideo')
+    await store.dispatch('message/loadFeedback')
 })
 // onMounted( async () => {
 //   await store.dispatch('gallery/loadCarousel')

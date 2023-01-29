@@ -1,12 +1,25 @@
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    setDoc,
+    getDoc,
+    getDocs,
+    doc
+} from "firebase/firestore";
+import { fbApp } from "/firebase-config";
+const db = getFirestore(fbApp)
+
 export default {
     namespaced: true,
     state() {
         return {
-            message : null
+            message : null,
+            feedback : {}
         }
 
     },
-    getters: {},
+
     mutations: {
         setMessage(state, message) {
             state.message = message
@@ -15,9 +28,9 @@ export default {
         clearMessage(state) {
             state.message = null
         },
-        closeStudentBar(state) {
-            state.studentBar = false
-        },
+        setFeedback(state, feedback){
+            state.feedback = feedback
+        }
 
     },
     actions: {
@@ -27,6 +40,21 @@ export default {
             setTimeout(() => {
                 commit('clearMessage')
             }, 10000)
+        },
+
+        async loadFeedback({commit, dispatch}) {
+            const feedbackRef = doc(db, 'messages', 'feedback')
+            const feedback = (await (getDoc(feedbackRef))).data()
+            console.log('feeback', feedback)
+            commit('setFeedback', feedback)
+
+
+        }
+    },
+    getters: {
+        feedbackList(state, {dispatch}) {
+            s
+            return state.feedback
         }
     },
 }
