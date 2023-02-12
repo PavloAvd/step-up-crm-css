@@ -19,6 +19,7 @@ export function  useLoginForm () {
     )
 
     const MIN_LENGTH = 6
+
     const {value: password, errorMessage: pError, handleBlur: pBlur} = useField(
         'password',
         yup
@@ -35,6 +36,7 @@ export function  useLoginForm () {
             setTimeout(() => submitCount.value = 0, 2000)
         }
     })
+    
     const onSubmit = handleSubmit (async values => {
         console.log('values from login form', values)
         try {

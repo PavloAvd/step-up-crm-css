@@ -45,7 +45,8 @@
     <div class="container">
       <div class="sliderListMobile" >
         <div class="card">
-          <span>{{ store.getters['feedbackList']  }}</span>
+          <!-- <span>{{ store.getters['message/feedbackList'].message.name  }} : </span> -->
+          <!-- <span>{{ store.getters['message/feedbackList'].message.text  }}</span> -->
         </div>
         <div  v-for="(item, idx) in feedbacks" :key="idx">
           <div class="card">
@@ -55,14 +56,24 @@
         </div>
       </div>
       <AppButton title="Залишити відгук" @click="openModal = true"/>
-      <app-modal v-if="openModal" classModal="home-modal" @close="openModal = false">
-        <div class="">
+      <app-modal v-if="openModal" classModal="home-modal-feedback" @close="openModal = false">
+        <form @submit.prevent="submitFeedback" action="">
           <div class="feedback">
-            <label for="feedback">Залишити відгук</label>
-            <input type="text" id="feedback" class="input"/>
-            <AppButton title="Відправити" @click="store.dispatch('gallery/loadHomePageVideo')"></AppButton>
+            <label for="feedBackName" id="feedBackName">Введіть Ім'я</label>
+            <input 
+            type="text" 
+            id="feedBackName" 
+            class="input" 
+            v-model="feedBackName"
+            @blur="fbnBlur"/>
           </div>
-        </div>
+          <div class="feedback">
+            <label for="feedBack">Залишити відгук</label>
+            <textarea name="feedBack" id="feedBack" cols="30" rows="10" class="input"></textarea>
+            <AppButton title="Відправити" type="submit"  @click="store.dispatch('message/sendFeedback'), submitFeedback"></AppButton>
+          </div>
+        </form>
+
       </app-modal>
     </div>
   </section>
@@ -78,12 +89,25 @@
 <!--    <carousel class=""/>--> 
 </template>
 
+<script>
+import { useInputValidate } from '../use/inputValidate'
+export default{
+  setup(){
+
+    return{
+      ...useInputValidate()
+    }
+  }
+}
+</script>
+
 <script setup>
 import AppButton from '@/components/ui/button/AppButton.vue';
 import Carousel from '@/components/Carousel'
 import { useStore } from 'vuex';
 import { onMounted, ref, computed } from 'vue';
 import AppModal from '@/components/AppModal.vue';
+
 
 let openModal = ref(false)
 const feedbacks = [

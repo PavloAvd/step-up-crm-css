@@ -34,18 +34,21 @@ export default {
 
     },
     actions: {
-        setMessage({commit}, message) {
-            console.log('from errors',message)
-            commit('setMessage', message)
-            setTimeout(() => {
-                commit('clearMessage')
-            }, 10000)
+        // setMessage({commit}, message) {
+        //     console.log('from errors',message)
+        //     commit('setMessage', message)
+        //     setTimeout(() => {
+        //         commit('clearMessage')
+        //     }, 10000)
+        // },
+        async sendFeedback ({}, fullName, feedback) {
+            
         },
 
         async loadFeedback({commit, dispatch}) {
             const feedbackRef = doc(db, 'messages', 'feedback')
             const feedback = (await (getDoc(feedbackRef))).data()
-            console.log('feeback', feedback)
+            console.log('feeback from fb', feedback)
             commit('setFeedback', feedback)
 
 
@@ -53,7 +56,7 @@ export default {
     },
     getters: {
         feedbackList(state, {dispatch}) {
-            s
+            
             return state.feedback
         }
     },

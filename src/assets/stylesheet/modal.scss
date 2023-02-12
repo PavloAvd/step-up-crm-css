@@ -1,15 +1,40 @@
-.home-modal {
-    background: rgb(182, 63, 63);
+.home-modal-feedback {
+    background: rgb(117, 0, 251);
+    border-radius: 20px;
     margin: auto auto;
     display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: fit-content;
+    height: fit-content;
     justify-content: center;
-    max-width: 600px;
-    max-height: 600px;
+    // max-width: 600px;
+    // max-height: 600px;
     z-index: 100;
     position: absolute;
-    padding: 20px;
+    padding: 60px;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    .closeModalButton{
+        color:rgb(255, 255, 255);
+        background-color: black;
+        opacity: 80%;
+        position: absolute;
+        top: 0; 
+        right: 0;       
+    }
+    
+    input{
+        height: 40px;
+        margin-top: 10px;
+        
+    }
+}
+
+@media (max-width: 500px) {
+    .home-modal-feedback{
+        width: 100%;
+    }
 }
